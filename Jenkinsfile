@@ -10,9 +10,19 @@ pipeline {
         }
     }
     stages {
-        stage('Test') {
+        stage('Test code-quests.rdok.dev') {
             steps {
-                sh 'codecept run codequests --no-colors'
+                sh 'codecept run codequests_rdok_dev --no-colors'
+            }
+        }
+        stage('Test rdok.dev') {
+            steps {
+                sh 'codecept run rdok_dev --no-colors'
+            }
+        }
+        stage('Test jenkins.rdok.dev') {
+            steps {
+                sh 'codecept run jenkins_rdok_dev --no-colors'
             }
         }
     }
