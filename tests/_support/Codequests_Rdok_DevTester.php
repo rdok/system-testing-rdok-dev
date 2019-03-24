@@ -16,7 +16,7 @@
  *
  * @SuppressWarnings(PHPMD)
 */
-class CodequestsTester extends \Codeception\Actor
+class Codequests_Rdok_DevTester extends \Codeception\Actor
 {
     use _generated\CodequestsTesterActions;
 

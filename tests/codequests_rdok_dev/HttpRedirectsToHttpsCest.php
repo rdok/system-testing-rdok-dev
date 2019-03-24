@@ -1,13 +1,17 @@
 <?php
 
+namespace coderequests_rdok_dev;
+
+use Codequests_Rdok_DevTester;
+
 class HttpRedirectsToHttpsCest
 {
-    public function _before(CodequestsTester $I)
+    public function _before(Codequests_Rdok_DevTester $I)
     {
         $I->stopFollowingRedirects();
     }
 
-    public function nonWwwHttpRedirectsToNonWwwHttps(CodequestsTester $I)
+    public function nonWwwHttpRedirectsToNonWwwHttps(Codequests_Rdok_DevTester $I)
     {
         $I->wantToTest('non-www http redirects to non-www https.');
 
@@ -18,7 +22,7 @@ class HttpRedirectsToHttpsCest
         $I->seeHttpHeader('Location', 'https://code-quests.rdok.dev/');
     }
 
-    public function wwwHttpRedirectsToNonWwwHttps(CodequestsTester $I)
+    public function wwwHttpRedirectsToNonWwwHttps(Codequests_Rdok_DevTester $I)
     {
         $I->wantToTest('www http redirects to non-www https.');
 
