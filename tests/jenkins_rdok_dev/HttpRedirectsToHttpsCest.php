@@ -1,17 +1,17 @@
 <?php
 
-namespace rdok_dev;
+namespace jenkins_rdok_dev;
 
-use Rdok_devTester;
+use Jenkins_rdok_devTester;
 
 class HttpRedirectsToHttpsCest
 {
-    public function _before(Rdok_devTester $I)
+    public function _before(Jenkins_rdok_devTester $I)
     {
         $I->stopFollowingRedirects();
     }
 
-    public function nonWwwHttpRedirectsToNonWwwHttps(Rdok_devTester $I)
+    public function nonWwwHttpRedirectsToNonWwwHttps(Jenkins_rdok_devTester $I)
     {
         $I->wantToTest('non-www http redirects to non-www https.');
 
@@ -22,7 +22,7 @@ class HttpRedirectsToHttpsCest
         $I->seeHttpHeader('Location', 'https://jenkins.rdok.dev/');
     }
 
-    public function wwwHttpRedirectsToNonWwwHttps(Rdok_devTester $I)
+    public function wwwHttpRedirectsToNonWwwHttps(Jenkins_rdok_devTester $I)
     {
         $I->wantToTest('www http redirects to non-www https.');
 

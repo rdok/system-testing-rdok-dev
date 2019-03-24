@@ -1,6 +1,6 @@
 <?php
 
-namespace rdok_dev;
+namespace jenkins_rdok_dev;
 
 use Rdok_devTester;
 
@@ -15,21 +15,22 @@ class WwwRedirectsToNonWwwCest
     {
         $I->wantToTest('www http redirects to non-www https.');
 
-        $I->sendGET('http://www.rdok.dev');
+        $I->sendGET('http://www.jenkins.rdok.dev');
 
         $I->seeResponseCodeIsRedirection();
 
-        $I->seeHttpHeader('Location', 'https://rdok.dev/');
+        $I->seeHttpHeader('Location', 'https://jenkins.rdok.dev/');
     }
 
     public function wwwHttpsRedirectsToNonWwwHttps(Rdok_devTester $I)
     {
         $I->wantToTest('www https redirects to non-www https.');
 
-        $I->sendGET('https://www.rdok.dev');
+        $I->sendGET('https://www.jenkins.rdok.dev');
 
         $I->seeResponseCodeIsRedirection();
 
-        $I->seeHttpHeader('Location', 'https://rdok.dev/');
+        $I->seeHttpHeader('Location', 'https://jenkins.rdok.dev/');
     }
 }
+
