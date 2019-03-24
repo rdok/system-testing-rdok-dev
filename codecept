@@ -1,3 +1,13 @@
 #!/usr/bin/env bash
 
-docker run -t codeception/codeception:2.5.2 $*
+# -t enables colours
+
+# codeception version is picked from composer.lock:
+#   `docker run -w /app  -v $(pwd):/app composer install`
+docker run -t               \
+    --user $UID:$UID        \
+    -w /app                 \
+    --volume $PWD:/app      \
+    php:7.3-cli             \
+    ./vendor/bin/codecept   \
+    $*

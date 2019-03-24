@@ -1,0 +1,6 @@
+actor: CodequestsTester
+modules:
+    enabled:
+        - \Helper\Codequests
+        - REST:
+            depends: PhpBrowser
