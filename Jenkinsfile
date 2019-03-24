@@ -1,22 +1,19 @@
 pipeline {
     agent {
         docker {
-            image 'php:7.3-cli'
+            image 'codeception/codeception:2.5.2'
             args '''
                 --volume="$PWD:/app"
                 --workdir=/app
+                --entrypoint=''
+                -t
             '''
         }
     }
     stages {
-        stage('Build') {
-            steps {
-                sh 'php composer install'
-            }
-        }
         stage('Test') {
             steps {
-                sh './vendor/bin/composer run codequests'
+                sh 'codecept run codequests --no-colors'
             }
         }
     }
