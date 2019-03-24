@@ -6,7 +6,6 @@ pipeline {
                 --volume="$PWD:/app"
                 --workdir=/app
                 --entrypoint=''
-                -t
             '''
         }
     }
