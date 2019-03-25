@@ -1,4 +1,10 @@
 pipeline {
+    environment {
+        AUTHOR_EMAIL = """${sh(
+            returnStdout: true,
+            script: 'git show -s --format="%ae" HEAD | sed "s/^ *//;s/ *$//"'
+        )}"""
+    }
     agent {
         docker {
             image 'codeception/codeception:2.5.2'
@@ -28,11 +34,17 @@ pipeline {
     }
     post {
         failure {
-            sh 'AUTHOR_EMAIL=(git show -s --format="%ae" HEAD | sed "s/^ *//;s/ *$//")'
             mail (
                 to: "${AUTHOR_EMAIL}",
-                subject: "${BUILD_TAG} - Tests Failed",
-                body: "Check console output at ${env.BUILD_URL}console to view the results."
+                subject: "❌ ${BUILD_TAG} - Failure",
+                body: "Job Url: ${env.JOB_URL}"
+            )
+        }
+        success {
+            mail (
+                to: "${AUTHOR_EMAIL}",
+                subject: "✔️ ${BUILD_TAG} - Stable",
+                body: "Job Url: ${env.JOB_URL}"
             )
         }
     }
