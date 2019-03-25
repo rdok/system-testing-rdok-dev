@@ -18,7 +18,7 @@
 */
 class Codequests_Rdok_DevTester extends \Codeception\Actor
 {
-    use _generated\CodequestsTesterActions;
+    use _generated\Codequests_Rdok_DevTesterActions;
 
    /**
     * Define custom actions here
