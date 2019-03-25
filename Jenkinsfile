@@ -26,4 +26,14 @@ pipeline {
             }
         }
     }
+    post {
+        failure {
+            sh 'AUTHOR_EMAIL=(git show -s --format="%ae" HEAD | sed "s/^ *//;s/ *$//")'
+            mail (
+                to: "${AUTHOR_EMAIL}",
+                subject: "${BUILD_TAG} - Tests Failed",
+                body: "Check console output at ${env.BUILD_URL}console to view the results."
+            )
+        }
+    }
 }
