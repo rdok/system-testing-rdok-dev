@@ -1,5 +1,5 @@
 <?php
-$I = new Jenkins_rdok_devTester($scenario);
+$I = new CodeQuestsTester($scenario);
 
 $I->wantToTest('https://code-quests.rdok.dev is healthy.');
 

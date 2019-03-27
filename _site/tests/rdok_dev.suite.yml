@@ -1,6 +1,6 @@
 actor: Rdok_devTester
 modules:
     enabled:
-        - Helper\CodeQuestsModule
+        - \Helper\Rdok_dev
         - REST:
               depends: PhpBrowser

@@ -1,5 +1,6 @@
 <?php
 
+use Helper\HasRedirectsAssertions;
 
 /**
  * Inherited Methods
@@ -15,12 +16,8 @@
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
  *
  * @SuppressWarnings(PHPMD)
-*/
+ */
 class Jenkins_rdok_devTester extends \Codeception\Actor
 {
-    use _generated\Jenkins_rdok_devTesterActions;
-
-   /**
-    * Define custom actions here
-    */
+    use _generated\Jenkins_rdok_devTesterActions, HasRedirectsAssertions;
 }

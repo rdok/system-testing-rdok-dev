@@ -1,5 +1,6 @@
 <?php
 
+use Helper\HasRedirectsAssertions;
 
 /**
  * Inherited Methods
@@ -15,12 +16,12 @@
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
  *
  * @SuppressWarnings(PHPMD)
-*/
+ */
 class Rdok_devTester extends \Codeception\Actor
 {
-    use _generated\Rdok_devTesterActions;
+    use _generated\Rdok_devTesterActions, HasRedirectsAssertions;
 
-   /**
-    * Define custom actions here
-    */
+    /**
+     * Define custom actions here
+     */
 }
