@@ -2,5 +2,5 @@
 vendor
 composer.phar
 composer.lock
-
 .idea
+.env

@@ -1,15 +1,13 @@
 #!/usr/bin/env bash
 
-# -t enables colours
-
 # codeception version is picked from composer.lock:
 #   `docker run -w /app  -v $(pwd):/app composer install`
 #   We do this to create the vendor file, so in turn PHPStorm can help us
 #   with autocomplete Codeception methods :)
-docker run -t               \
-    --user $UID:$UID        \
-    -w /app                 \
-    --volume $PWD:/app      \
-    php:7.3-cli             \
-    ./vendor/bin/codecept   \
+docker run -it \
+    --user $UID:$UID \
+    -w /app \
+    --volume $PWD:/app \
+    codeception/codeception:2.5.2 \
+    ./vendor/bin/codecept \
     $*

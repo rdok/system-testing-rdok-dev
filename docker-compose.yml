@@ -1,0 +1,16 @@
+version: "3.7"
+
+services:
+
+  workbench:
+    build:
+      context: .
+      dockerfile: docker/workspace/Dockerfile
+      args:
+        - APP_UID
+        - APP_GID
+    tty: true
+    container_name: workbench
+    image: workbench:v1
+    volumes:
+      - $PWD:/app

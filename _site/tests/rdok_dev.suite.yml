@@ -1,6 +1,0 @@
-actor: Rdok_devTester
-modules:
-    enabled:
-        - \Helper\Rdok_dev
-        - REST:
-              depends: PhpBrowser

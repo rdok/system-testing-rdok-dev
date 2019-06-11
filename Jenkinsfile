@@ -5,30 +5,23 @@ pipeline {
             script: 'git show -s --format="%ae" HEAD | sed "s/^ *//;s/ *$//"'
         )}"""
     }
-    agent {
-        docker {
-            image 'codeception/codeception:2.5.2'
-            args '''
-                --volume="$PWD:/app"
-                --workdir=/app
-                --entrypoint=''
-            '''
-        }
-    }
     stages {
-        stage('code-quests.rdok.dev') {
+        stage('build') {
             steps {
-                sh 'codecept run codequests_rdok_dev --no-colors'
+                sh 'docker-compose run workbench composer install'
+                sh 'docker-compose run workbench ./vendor/bin/codecept build'
             }
         }
-        stage('rdok.dev') {
+        stage('test') {
             steps {
-                sh 'codecept run rdok_dev --no-colors'
+                sh 'docker-compose run workbench ./vendor/bin/codecept  run codequests_rdok_dev --no-colors '
+                sh 'docker-compose run workbench ./vendor/bin/codecept run rdok_dev --no-colors '
+                sh 'docker-compose run workbench ./vendor/bin/codecept run jenkins_rdok_dev --no-colors '
             }
         }
-        stage('jenkins.rdok.dev') {
+        stage('cleanup') {
             steps {
-                sh 'codecept run jenkins_rdok_dev --no-colors'
+                sh 'docker system prune -f'
             }
         }
     }
