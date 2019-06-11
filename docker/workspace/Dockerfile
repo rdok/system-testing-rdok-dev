@@ -12,6 +12,8 @@ ARG APP_GID
 RUN addgroup app-group -g ${APP_GID} \
     && adduser app-user -G app-group -D -u ${APP_UID}
 
-WORKDIR /app
-RUN chown -R ${APP_UID}:${APP_GID} /app
+RUN mkdir /app \
+    && chown -R ${APP_UID}:${APP_GID} /app
+
 USER app-user
+WORKDIR /app
