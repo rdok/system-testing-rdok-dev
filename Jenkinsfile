@@ -11,8 +11,7 @@ pipeline {
     stages {
         stage('build') {
             steps {
-                sh 'docker-compose run workbench composer install'
-                sh 'docker-compose run workbench ./vendor/bin/codecept build'
+                sh 'docker-compose build'
             }
         }
         stage('test') {
