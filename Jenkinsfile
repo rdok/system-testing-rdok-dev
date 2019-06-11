@@ -1,8 +1,8 @@
 pipeline {
     agent any
     environment {
-        APP_UID = """${sh(returnStdout: true,script: 'id -u')}"""
-        APP_GID = """${sh(returnStdout: true,script: 'id -g')}"""
+        APP_UID = sh(script: "id -u | tr -d '\n'", returnStdout: true)
+        APP_GID = sh(script: "id -g | tr -d '\n'", returnStdout: true)
         AUTHOR_EMAIL = """${sh(
             returnStdout: true,
             script: 'git show -s --format="%ae" HEAD | sed "s/^ *//;s/ *$//"'
