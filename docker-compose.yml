@@ -7,8 +7,8 @@ services:
       context: .
       dockerfile: docker/workspace/Dockerfile
       args:
-        - APP_UID
-        - APP_GID
+        - APP_UID=113
+        - APP_GID=117
     tty: true
     container_name: workbench
     image: workbench:v1
