@@ -1,4 +1,5 @@
 pipeline {
+    agent any
     environment {
         AUTHOR_EMAIL = """${sh(
             returnStdout: true,
