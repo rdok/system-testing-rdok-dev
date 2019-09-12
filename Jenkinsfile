@@ -9,12 +9,12 @@ pipeline {
         )}"""
     }
     stages {
-        stage('build') { steps { sh 'docker-compose build' } }
+        stage('build') { steps { sh 'docker-compose build --pull' } }
         stage('test') {
             steps {
-                sh 'docker-compose run workbench ./vendor/bin/codecept  run codequests_rdok_dev --no-colors '
-                sh 'docker-compose run workbench ./vendor/bin/codecept run rdok_dev --no-colors '
-                sh 'docker-compose run workbench ./vendor/bin/codecept run jenkins_rdok_dev --no-colors '
+                sh 'docker-compose run --rm workbench ./vendor/bin/codecept  run codequests_rdok_dev --no-colors '
+                sh 'docker-compose run --rm workbench ./vendor/bin/codecept run rdok_dev --no-colors '
+                sh 'docker-compose run --rm workbench ./vendor/bin/codecept run jenkins_rdok_dev --no-colors '
             }
         }
         stage('cleanup') { steps { sh 'docker-compose down' } }
