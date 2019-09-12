@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent { label "linux" }
     environment {
         APP_UID = sh(script: "id -u | tr -d '\n'", returnStdout: true)
         APP_GID = sh(script: "id -g | tr -d '\n'", returnStdout: true)
@@ -9,11 +9,7 @@ pipeline {
         )}"""
     }
     stages {
-        stage('build') {
-            steps {
-                sh 'docker-compose build'
-            }
-        }
+        stage('build') { steps { sh 'docker-compose build' } }
         stage('test') {
             steps {
                 sh 'docker-compose run workbench ./vendor/bin/codecept  run codequests_rdok_dev --no-colors '
@@ -21,26 +17,21 @@ pipeline {
                 sh 'docker-compose run workbench ./vendor/bin/codecept run jenkins_rdok_dev --no-colors '
             }
         }
-        stage('cleanup') {
-            steps {
-                sh 'docker system prune -f'
-            }
-        }
+        stage('cleanup') { steps { sh 'docker system prune -f' } }
     }
-    post {
-        failure {
-            mail (
-                to: "${AUTHOR_EMAIL}",
-                subject: "❌ ${BUILD_TAG} - Failure",
-                body: "Job Url: ${env.JOB_URL}"
-            )
-        }
-        success {
-            mail (
-                to: "${AUTHOR_EMAIL}",
-                subject: "✔️ ${BUILD_TAG} - Stable",
-                body: "Job Url: ${env.JOB_URL}"
-            )
-        }
-    }
+
+    post {                                                                      
+        failure {                                                               
+            slackSend color: '#FF0000',                                         
+                message: "@here Failed: <${env.BUILD_URL}console | ${env.JOB_BASE_NAME}#${env.BUILD_NUMBER}>"
+        }                                                                       
+        fixed {                                                                 
+            slackSend color: 'good',                                            
+                message: "@here Fixed: <${env.BUILD_URL}console | ${env.JOB_BASE_NAME}#${env.BUILD_NUMBER}>"
+        }                                                                       
+        success {                                                               
+            slackSend message: "Stable: <${env.BUILD_URL}console | ${env.JOB_BASE_NAME}#${env.BUILD_NUMBER}>" 
+        }                                                                       
+    } 
+        
 }
