@@ -1,23 +1,15 @@
 pipeline {
     agent { label "linux" }
-    environment {
-        APP_UID = sh(script: "id -u | tr -d '\n'", returnStdout: true)
-        APP_GID = sh(script: "id -g | tr -d '\n'", returnStdout: true)
-        AUTHOR_EMAIL = """${sh(
-            returnStdout: true,
-            script: 'git show -s --format="%ae" HEAD | sed "s/^ *//;s/ *$//"'
-        )}"""
-    }
     stages {
-        stage('build') { steps { sh 'docker-compose build --pull' } }
         stage('test') {
             steps {
-                sh 'docker-compose run --rm workbench ./vendor/bin/codecept  run codequests_rdok_dev --no-colors '
-                sh 'docker-compose run --rm workbench ./vendor/bin/codecept run rdok_dev --no-colors '
-                sh 'docker-compose run --rm workbench ./vendor/bin/codecept run jenkins_rdok_dev --no-colors '
+                sh 'docker run --rm -v $(pwd):/app -w /app codeception/codeception run codequests_rdok_dev'
+                sh 'docker run --rm -v $(pwd):/app -w /app codeception/codeception run jenkins_rdok_dev'
+                sh 'docker run --rm -v $(pwd):/app -w /app codeception/codeception run learning_react_rdok_dev'
+                sh 'docker run --rm -v $(pwd):/app -w /app codeception/codeception run practical_vim_rdok_dev'
+                sh 'docker run --rm -v $(pwd):/app -w /app codeception/codeception run rdok_dev'
             }
         }
-        stage('cleanup') { steps { sh 'docker-compose down' } }
     }
 
     post {                                                                      
