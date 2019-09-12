@@ -11,7 +11,7 @@ pipeline {
         stage('Test') {
             steps {
                 wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) {
-                    sh 'docker run -i --rm -v $(pwd):/app -w /app codeception/codeception run codequests_rdok_dev --coverage-html /app/report'
+                    sh 'docker run -i --rm -v $(pwd):/app -w /app codeception/codeception run codequests_rdok_dev --html /app/report.html'
                 }
             }
         }
@@ -36,7 +36,7 @@ pipeline {
             slackSend message: "Stable: <${env.BUILD_URL}console | ${env.JOB_BASE_NAME}#${env.BUILD_NUMBER}>" 
         }                                                                       
         always {
-            publishHTML([allowMissing: false, alwaysLinkToLastBuild: true, keepAll: false, reportDir: 'report', reportFiles: 'index.html', reportName: 'Report', reportTitles: ''])
+            publishHTML([allowMissing: false, alwaysLinkToLastBuild: true, keepAll: false, reportFiles: 'report.html', reportName: 'Report'])
         }
     } 
         
