@@ -1,7 +1,12 @@
 pipeline {
     agent { label "linux" }
     stages {
-        stage('test') {
+        stage('Build') {
+            steps {
+                sh 'docker run --rm -v $(pwd):/app -w /app codeception/codeception build'
+            }
+        }
+        stage('Test') {
             steps {
                 sh 'docker run --rm -v $(pwd):/app -w /app codeception/codeception run codequests_rdok_dev'
                 sh 'docker run --rm -v $(pwd):/app -w /app codeception/codeception run jenkins_rdok_dev'
