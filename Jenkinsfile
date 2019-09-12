@@ -3,16 +3,20 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'docker run --rm -v $(pwd):/app -w /app codeception/codeception build'
+                ansiColor('xterm') {
+                    sh 'docker run --rm -v $(pwd):/app -w /app codeception/codeception build'
+                }
             }
         }
         stage('Test') {
             steps {
-                sh 'docker run --rm -v $(pwd):/app -w /app codeception/codeception run codequests_rdok_dev'
-                sh 'docker run --rm -v $(pwd):/app -w /app codeception/codeception run jenkins_rdok_dev'
-                sh 'docker run --rm -v $(pwd):/app -w /app codeception/codeception run learning_react_rdok_dev'
-                sh 'docker run --rm -v $(pwd):/app -w /app codeception/codeception run practical_vim_rdok_dev'
-                sh 'docker run --rm -v $(pwd):/app -w /app codeception/codeception run rdok_dev'
+                wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) {
+                    sh 'docker run --rm -v $(pwd):/app -w /app codeception/codeception run codequests_rdok_dev'
+                    sh 'docker run --rm -v $(pwd):/app -w /app codeception/codeception run jenkins_rdok_dev'
+                    sh 'docker run --rm -v $(pwd):/app -w /app codeception/codeception run learning_react_rdok_dev'
+                    sh 'docker run --rm -v $(pwd):/app -w /app codeception/codeception run practical_vim_rdok_dev'
+                    sh 'docker run --rm -v $(pwd):/app -w /app codeception/codeception run rdok_dev'
+                }
             }
         }
     }
