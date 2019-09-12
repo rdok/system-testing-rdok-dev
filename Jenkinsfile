@@ -11,11 +11,7 @@ pipeline {
         stage('Test') {
             steps {
                 wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) {
-                    sh 'docker run -i --rm -v $(pwd):/app -w /app codeception/codeception run codequests_rdok_dev'
-                    sh 'docker run -i --rm -v $(pwd):/app -w /app codeception/codeception run jenkins_rdok_dev'
-                    sh 'docker run -i --rm -v $(pwd):/app -w /app codeception/codeception run learning_react_rdok_dev'
-                    sh 'docker run -i --rm -v $(pwd):/app -w /app codeception/codeception run practical_vim_rdok_dev'
-                    sh 'docker run -i --rm -v $(pwd):/app -w /app codeception/codeception run rdok_dev'
+                    sh 'docker run -i --rm -v $(pwd):/app -w /app codeception/codeception run codequests_rdok_dev --coverage-html /app/report'
                 }
             }
         }
@@ -25,6 +21,12 @@ pipeline {
         failure {                                                               
             slackSend color: '#FF0000',                                         
                 message: "@here Failed: <${env.BUILD_URL}console | ${env.JOB_BASE_NAME}#${env.BUILD_NUMBER}>"
+            emailext attachLog: true,
+                body: """<p>View console output at <a href='${env.BUILD_URL}/console'>
+                            ${env.JOB_BASE_NAME}#${env.BUILD_NUMBER}</a></p>""", 
+                compressLog: true,
+                recipientProviders: [[$class: 'DevelopersRecipientProvider']],
+                subject: "Failed: <${env.BUILD_URL}console | ${env.JOB_BASE_NAME}#${env.BUILD_NUMBER}>"
         }                                                                       
         fixed {                                                                 
             slackSend color: 'good',                                            
@@ -33,6 +35,9 @@ pipeline {
         success {                                                               
             slackSend message: "Stable: <${env.BUILD_URL}console | ${env.JOB_BASE_NAME}#${env.BUILD_NUMBER}>" 
         }                                                                       
+        always {
+            publishHTML([allowMissing: false, alwaysLinkToLastBuild: true, keepAll: false, reportDir: 'report', reportFiles: 'index.html', reportName: 'Report', reportTitles: ''])
+        }
     } 
         
 }
