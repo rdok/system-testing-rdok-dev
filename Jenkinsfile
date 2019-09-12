@@ -17,7 +17,7 @@ pipeline {
                 sh 'docker-compose run workbench ./vendor/bin/codecept run jenkins_rdok_dev --no-colors '
             }
         }
-        stage('cleanup') { steps { sh 'docker system prune -f' } }
+        stage('cleanup') { steps { sh 'docker-compose down' } }
     }
 
     post {                                                                      
