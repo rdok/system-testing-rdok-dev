@@ -11,7 +11,7 @@ pipeline {
         stage('Test') {
             steps {
                 wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) {
-                    sh 'docker run -i --rm -v $(pwd):/app -w /app codeception/codeception run codequests_rdok_dev --html /app/report.html'
+                    sh 'docker run -i --rm -v $(pwd):/app -w /app codeception/codeception run --html /app/report.html'
                 }
             }
         }
