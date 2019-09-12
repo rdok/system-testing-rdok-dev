@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                ansiColor('xterm') {
+                wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) {
                     sh 'docker run -i --rm -v $(pwd):/app -w /app codeception/codeception build'
                 }
             }
