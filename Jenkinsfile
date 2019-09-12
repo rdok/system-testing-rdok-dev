@@ -36,7 +36,7 @@ pipeline {
             slackSend message: "Stable: <${env.BUILD_URL}console | ${env.JOB_BASE_NAME}#${env.BUILD_NUMBER}>" 
         }                                                                       
         always {
-            publishHTML([allowMissing: false, alwaysLinkToLastBuild: true, keepAll: false, reportFiles: 'report.html', reportName: 'Report'])
+            publishHTML([allowMissing: false, alwaysLinkToLastBuild: true, keepAll: false, reportFiles: 'report.html', reportName: 'Report', reportDir: '.'])
         }
     } 
         
