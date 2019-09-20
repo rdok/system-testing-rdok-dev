@@ -1,6 +1,16 @@
 pipeline {
     agent { label "linux" }
     triggers { cron('H H(18-19) * * *') }
+    options { 
+        buildDiscarder(
+            logRotator(
+                daysToKeepStr: '30',
+                numToKeepStr: '100',
+                artifactDaysToKeepStr: '30',
+                artifactNumToKeepStr: '100'
+            )
+        )
+    }
     stages {
         stage('Build') {
             steps {
