@@ -1,6 +1,6 @@
 pipeline {
     agent { label "linux" }
-    triggers { cron('H H(19-20) * * *') }
+    triggers { cron('H H(18-19) * * *') }
     stages {
         stage('Build') {
             steps {
