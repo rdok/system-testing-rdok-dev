@@ -7,7 +7,7 @@ pipeline {
             threshold: hudson.model.Result.SUCCESS
         )
     }
-    options { buildDiscarder( logRotator( daysToKeepStr: '30', numToKeepStr: '100' ) ) }
+    options { buildDiscarder( logRotator( numToKeepStr: '100' ) ) }
     stages {
         stage('Build') {
             steps {

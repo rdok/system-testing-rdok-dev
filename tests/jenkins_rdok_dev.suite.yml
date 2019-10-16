@@ -1,6 +1,0 @@
-actor: Jenkins_rdok_devTester
-modules:
-    enabled:
-        - Helper\CodeQuestsModule
-        - REST:
-              depends: PhpBrowser
