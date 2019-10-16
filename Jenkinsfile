@@ -3,7 +3,7 @@ pipeline {
     triggers {
         cron('H H(18-19) * * *')
         upstream(
-            upstreamProjects: 'learning-react,practical-vim,rdok.dev',
+            upstreamProjects: 'learning-react,practical-vim,rdok.dev,tic-tac-toe',
             threshold: hudson.model.Result.SUCCESS
         )
     }
