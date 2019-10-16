@@ -1,9 +1,9 @@
 <?php
 $I = new Rdok_devTester($scenario);
 
-$I->wantToTest('https://tic-tac-toe.react.rdok.dev is healthy.');
+$I->wantToTest('https://tic-tac-toe.rdok.dev is healthy.');
 
-$I->sendGET('https://tic-tac-toe.react.rdok.dev/alive.html');
+$I->sendGET('https://tic-tac-toe.rdok.dev/alive.html');
 
 $I->seeResponseCodeIs(200);
 
