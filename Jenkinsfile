@@ -1,7 +1,7 @@
 pipeline {
     agent { label "linux" }
     triggers {
-        cron('H H(18-19) * * *')
+        cron('H * * * *')
         upstream(
             upstreamProjects: 'learning-react,practical-vim,rdok.dev,tic-tac-toe',
             threshold: hudson.model.Result.SUCCESS
