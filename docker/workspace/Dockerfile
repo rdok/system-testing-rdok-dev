@@ -1,7 +1,6 @@
 FROM php:7.3-cli-alpine3.9
 
-LABEL maintainer="Rizart Dokollari <***REMOVED***>" \
-    version="1.0"
+LABEL maintainer="Rizart Dokollari" version="1.0"
 
 # Install system requirements
 RUN apk add composer \
