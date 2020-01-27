@@ -3,19 +3,18 @@ pipeline {
     triggers {
         cron('H * * * *')
         upstream(
-            upstreamProjects: 'learning-react,practical-vim,rdok.dev,tic-tac-toe',
+            upstreamProjects: 'learning-react,practical-vim,rdok.dev,tic-tac-toe,practical-vim/practical-vim-website',
             threshold: hudson.model.Result.SUCCESS
         )
     }
     options { buildDiscarder( logRotator( numToKeepStr: '100' ) ) }
     stages {
         stage('Build') {
-            steps {
-                sh 'docker run -i --rm -v $(pwd):/app -w /app codeception/codeception build'
-            }
+            steps { sh 'docker-compose run --rm codeception build' }
         }
-        stage('Test') { steps { ansiColor('xterm') {
-            sh 'docker run -i --rm -v $(pwd):/app -w /app codeception/codeception run --html /app/report.html'
+        stage('Test') { steps {
+            ansiColor('xterm') {
+            sh 'docker-compose run --rm codeception build'
         } } }
     }
     post {

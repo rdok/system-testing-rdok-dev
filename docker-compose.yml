@@ -2,13 +2,14 @@ version: "3.7"
 
 services:
 
-  workbench:
-    build:
-      context: .
-      dockerfile: docker/workspace/Dockerfile
-      args:
-        - APP_UID
-        - APP_GID
-    tty: true
-    container_name: workbench
-    image: workbench:1.0
+#  composer:
+#    image: composer
+#    working_dir: /app
+#    volumes:
+#    - .:/app
+
+  codeception:
+    image: codeception/codeception
+    working_dir: /app
+    volumes:
+      - .:/app
